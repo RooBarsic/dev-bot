@@ -47,7 +47,7 @@ public class ClubCommandsHandler {
             response.setMessage("Send club location");
             DevBotButton button = new DevBotButton("send location", "/send-location");
             button.setRequiredLocation(true);
-            response.setInlineButtons(false);
+            response.setInlineButtons(true);
             response.addButton(button);
             hierarchy.getUserToUpdateByTelegramId(request.getUserChatId())
                     .setExpectedData(ExpectedData.CLUB_LOCATION);
@@ -90,11 +90,21 @@ public class ClubCommandsHandler {
 
         if (request.isHasLocation()) {
             double dist = hierarchy.club.getLocation().distance(request.getLocation());
-            response.setMessage("Distance from club = " + Double.toString(dist) + "\n" +
+            String message = "";
+            if (dist > 10.0) {
+                message += "You are too fare from club. Please come to club and try again today!\n";
+            }
+            else {
+                message += "You are in the club. You got +1 point to your bonuses. Congratulations.\n";
+            }
+            message += "\nYour distance from club location = " + Double.toString(dist) + " meters\n" +
                     "Club latitude : " + hierarchy.club.getLocation().getLatitude() + "\n" +
                     "Club longitude : " + hierarchy.club.getLocation().getLongitude() + "\n\n" +
                     "Your latitude : " + request.getLocation().getLatitude() + "\n" +
-                    "Your longitude : " + request.getLocation().getLongitude());
+                    "Your longitude : " + request.getLocation().getLongitude();
+            response.setMessage(message);
+            hierarchy.getUserToUpdateByTelegramId(request.getUserChatId())
+                    .setExpectedData(ExpectedData.NONE);
         }
         else {
             response.setMessage("Send me your location");

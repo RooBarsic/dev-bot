@@ -39,6 +39,15 @@ public class Location {
         return Math.floor(dist);
     }
 
+    public double dist3(@NotNull final Location location) {
+        double lon = this.longitude,
+                lat = this.latitude,
+                lon2 = location.longitude,
+                lat2 = location.latitude;
+        double result = 111.2 * Math.sqrt( (lon - lon2)*(lon - lon2) + (lat - lat2)*Math.cos(Math.PI*lon/180)*(lat - lat2)*Math.cos(Math.PI*lon/180));
+        return result;
+    }
+
     public double distance(@NotNull final Location location) {
 
         double lat1 = location.latitude;
@@ -50,7 +59,7 @@ public class Location {
         dist = Math.acos(dist);
         dist = rad2deg(dist);
         dist = dist * 1.609344 * 1000;
-        return (dist); // 134910.69784909734
+        return (dist) * 100; // meters
     }
     /* The function to convert decimal into radians */
     private double deg2rad(double deg) {

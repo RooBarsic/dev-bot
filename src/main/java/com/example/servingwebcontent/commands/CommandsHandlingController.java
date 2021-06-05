@@ -41,6 +41,7 @@ public class CommandsHandlingController {
 
         response.addButton(new DevBotButton("help", "/help"));
         response.addButton(new DevBotButton("feedback", "/feedback"));
+        response.setNewButtonsLine();
         response.addButton(new DevBotButton("create club", "/create-club"));
         response.addButton(new DevBotButton("check location", "/check-location"));
         response.setInlineButtons(true);

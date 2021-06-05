@@ -49,8 +49,14 @@ public class ResponseSenderRestController {
         }
         if (responseStatus.length() == 0) {
             if (!response.hasButtons()) {
+//                response.addButton(new DevBotButton("help", "/help"));
+//                response.addButton(new DevBotButton("feedback", "/feedback"));
+//                response.setInlineButtons(true);
                 response.addButton(new DevBotButton("help", "/help"));
                 response.addButton(new DevBotButton("feedback", "/feedback"));
+                response.setNewButtonsLine();
+                response.addButton(new DevBotButton("create club", "/create-club"));
+                response.addButton(new DevBotButton("check location", "/check-location"));
                 response.setInlineButtons(true);
             }
 
