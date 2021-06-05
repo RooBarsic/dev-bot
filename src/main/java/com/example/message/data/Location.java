@@ -38,4 +38,26 @@ public class Location {
         System.out.println("dist = " + dist);
         return Math.floor(dist);
     }
+
+    public double distance(@NotNull final Location location) {
+
+        double lat1 = location.latitude;
+        double lon1 = location.longitude;
+        double lat2 = this.latitude;
+        double lon2 = this.longitude;
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 1.609344 * 1000;
+        return (dist); // 134910.69784909734
+    }
+    /* The function to convert decimal into radians */
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+    /* The function to convert radians into decimal */
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+    }
 }
