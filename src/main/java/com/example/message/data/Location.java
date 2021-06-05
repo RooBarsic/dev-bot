@@ -35,6 +35,7 @@ public class Location {
     public double countDist(@NotNull final Location location) {
         double dist = ((this.latitude - location.latitude) * (this.latitude - location.latitude));
         dist += ((this.longitude - location.longitude) * (this.longitude - location.longitude));
-        return dist;
+        System.out.println("dist = " + dist);
+        return Math.floor(dist);
     }
 }

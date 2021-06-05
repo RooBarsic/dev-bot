@@ -90,7 +90,7 @@ public class ClubCommandsHandler {
 
         if (request.isHasLocation()) {
             double dist = hierarchy.club.getLocation().countDist(request.getLocation());
-            response.setMessage("Distance from club = " + dist + "\n" +
+            response.setMessage("Distance from club = " + Double.toString(dist) + "\n" +
                     "Club latitude : " + hierarchy.club.getLocation().getLatitude() + "\n" +
                     "Club longitude : " + hierarchy.club.getLocation().getLongitude() + "\n\n" +
                     "Your latitude : " + request.getLocation().getLatitude() + "\n" +
