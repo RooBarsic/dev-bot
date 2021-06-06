@@ -1,0 +1,39 @@
+req : /start or any request for first time
+resp: Salam. My name is DevSport_bot, I will help you to manage your sport activities
+resp: Please send me your FIO
+
+req: FIO
+resp: Thank you. Your FIO is : FIO
+buttons: edit, continue
+
+req: continue
+resp: Please send me your CityName or GEO position to identify your City name
+req: GEO
+resp: Ok. Your city name is ...
+resp: Now chose your role Admin or Sportsmen
+button: Admin, Sportsmen
+
+
+
+
+For Admin
+/set-organization-name
+/add-club
+/open-club (interval 2 hours) return generated club-kod
+
+
+
+
+
+
+User data :
+FIO:
+telegram_id:
+City:
+dev_id :
+club_id:
+organization_id:
+
+
+
+
