@@ -18,6 +18,10 @@ public class DevBotRequestParser {
     private final String EMPTY_COMMAND_CONTROLLER;
     private final String CLUB_CREATE_COMMAND_CONTROLLER;
     private final String CHECK_LOCATION_COMMAND_CONTROLLER;
+    private final String PROFILE_FIO_COMMAND_CONTROLLER;
+    private final String PROFILE_CITY_LOCATION_COMMAND_CONTROLLER;
+    private final String PROFILE_ACTIVITY_STATUS_COMMAND_CONTROLLER;
+    private  String JOIN_CLUB;
     private final ConcurrentLinkedDeque<DevBotRequest> receivedRequestsQueue;
     private final Hierarchy hierarchy;
 
@@ -30,6 +34,11 @@ public class DevBotRequestParser {
         FEEDBACK_COMMAND_REST_CONTROLLER = appUrl + "/command/profile/feedback";
         CLUB_CREATE_COMMAND_CONTROLLER = appUrl + "/club/create";
         CHECK_LOCATION_COMMAND_CONTROLLER = appUrl + "/club/check-position";
+        PROFILE_FIO_COMMAND_CONTROLLER = appUrl + "/command/profile/fio";
+        PROFILE_CITY_LOCATION_COMMAND_CONTROLLER = appUrl + "/command/profile/city-location";
+        PROFILE_ACTIVITY_STATUS_COMMAND_CONTROLLER = appUrl + "/command/profile/activity-status";
+        JOIN_CLUB = appUrl + "/command/profile/join-club";
+
         receivedRequestsQueue = new ConcurrentLinkedDeque<>();
         this.hierarchy = hierarchy;
 
@@ -59,6 +68,11 @@ public class DevBotRequestParser {
                     //find controller url for requested command
                     final String commandRestController;
                     final ExpectedData expectedData = hierarchy.getOrCreateUserByTelegramId(request.getUserChatId()).getExpectedData();
+
+//                    if (request.getMessage() != null && request.getMessage().equals("ignore")) {
+//                        continue;
+//                    }
+
                     if (request.getMessage() == null) {
                         switch (expectedData) {
                             case FEEDBACK:
@@ -72,6 +86,18 @@ public class DevBotRequestParser {
                                 break;
                             case USER_LOCATION:
                                 commandRestController = CHECK_LOCATION_COMMAND_CONTROLLER;
+                                break;
+                            case USER_FIO:
+                                commandRestController = PROFILE_FIO_COMMAND_CONTROLLER;
+                                break;
+                            case USER_CITY_LOCATION:
+                                commandRestController = PROFILE_CITY_LOCATION_COMMAND_CONTROLLER;
+                                break;
+                            case USER_ACTIVITY_STATUS:
+                                commandRestController = PROFILE_ACTIVITY_STATUS_COMMAND_CONTROLLER;
+                                break;
+                            case CLUB_CODE:
+                                commandRestController = JOIN_CLUB;
                                 break;
                             default:
                                 commandRestController = EMPTY_COMMAND_CONTROLLER;
@@ -92,6 +118,9 @@ public class DevBotRequestParser {
                     else if (request.getMessage().startsWith("/check-location")) {
                         commandRestController = CHECK_LOCATION_COMMAND_CONTROLLER;
                     }
+                    else if (request.getMessage().startsWith("/join-club")) {
+                        commandRestController = JOIN_CLUB;
+                    }
                     else {
                         switch (expectedData) {
                             case FEEDBACK:
@@ -105,6 +134,18 @@ public class DevBotRequestParser {
                                 break;
                             case USER_LOCATION:
                                 commandRestController = CHECK_LOCATION_COMMAND_CONTROLLER;
+                                break;
+                            case USER_FIO:
+                                commandRestController = PROFILE_FIO_COMMAND_CONTROLLER;
+                                break;
+                            case USER_CITY_LOCATION:
+                                commandRestController = PROFILE_CITY_LOCATION_COMMAND_CONTROLLER;
+                                break;
+                            case USER_ACTIVITY_STATUS:
+                                commandRestController = PROFILE_ACTIVITY_STATUS_COMMAND_CONTROLLER;
+                                break;
+                            case CLUB_CODE:
+                                commandRestController = JOIN_CLUB;
                                 break;
                             default:
                                 commandRestController = EMPTY_COMMAND_CONTROLLER;

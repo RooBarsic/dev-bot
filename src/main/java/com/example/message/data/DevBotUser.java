@@ -1,5 +1,7 @@
 package com.example.message.data;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * about user
  * User : DevBot_id, telegram_id, telegram_login
@@ -10,6 +12,11 @@ public class DevBotUser {
     private String telegramId = "";
     private String telegramLogin = "";
     private String FIO = "";
+    private City city;
+    private UserActivityStatus activityStatus;
+    private Club editingClub = new Club();
+    private AtomicInteger activityPoints = new AtomicInteger(0);
+    private AtomicInteger activityPointsStack = new AtomicInteger(0);
 
     private ExpectedData expectedData = ExpectedData.NONE;
 
@@ -61,4 +68,45 @@ public class DevBotUser {
         this.DevBotId = DevBotId;
     }
 
+    public String getFIO() {
+        return FIO;
+    }
+
+    public void setFIO(String FIO) {
+        this.FIO = FIO;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public UserActivityStatus getActivityStatus() {
+        return activityStatus;
+    }
+
+    public void setActivityStatus(UserActivityStatus activityStatus) {
+        this.activityStatus = activityStatus;
+    }
+
+    public Club getEditingClub() {
+        return editingClub;
+    }
+
+    public void setEditingClub(Club editingClub) {
+        this.editingClub = editingClub;
+    }
+
+    public void visitedNewSportActivity() {
+        int newPoints = activityPoints.get() + activityPointsStack.get();
+        activityPoints.set(newPoints);
+        activityPointsStack.incrementAndGet();
+    }
+
+    public int getActivityPoints() {
+        return activityPoints.get();
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.message;
 
 import com.example.message.data.DevBotButton;
+import com.example.message.data.UserActivityStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.LinkedList;
@@ -15,6 +16,9 @@ public class DevBotResponse {
     private String message;
     private List<List<DevBotButton>> buttonsMatrix;
     private boolean inlineButtons = true; // use inline buttons by default
+    private boolean noButtons = false;
+    private UserActivityStatus userActivityStatus = UserActivityStatus.SPORTSMEN;
+    private boolean hasActivityStatus = false;
 
     public DevBotResponse() {
         buttonsMatrix = new LinkedList<>();
@@ -75,4 +79,28 @@ public class DevBotResponse {
         this.inlineButtons = inlineButtons;
     }
 
+    public boolean isNoButtons() {
+        return noButtons;
+    }
+
+    public void setNoButtons(boolean noButtons) {
+        this.noButtons = noButtons;
+    }
+
+    public UserActivityStatus getUserActivityStatus() {
+        return userActivityStatus;
+    }
+
+    public void setUserActivityStatus(UserActivityStatus userActivityStatus) {
+        this.userActivityStatus = userActivityStatus;
+        this.hasActivityStatus = true;
+    }
+
+    public boolean isHasActivityStatus() {
+        return hasActivityStatus;
+    }
+
+    public void setHasActivityStatus(boolean hasActivityStatus) {
+        this.hasActivityStatus = hasActivityStatus;
+    }
 }

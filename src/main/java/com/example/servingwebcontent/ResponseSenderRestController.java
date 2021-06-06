@@ -3,6 +3,7 @@ package com.example.servingwebcontent;
 
 import com.example.message.DevBotResponse;
 import com.example.message.data.DevBotButton;
+import com.example.message.data.UserActivityStatus;
 import com.example.servingwebcontent.components.TelegramBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,16 +49,36 @@ public class ResponseSenderRestController {
             responseStatus += "Error: No message to send\n";
         }
         if (responseStatus.length() == 0) {
-            if (!response.hasButtons()) {
+            if (!response.hasButtons() && response.isNoButtons() == false) {
 //                response.addButton(new DevBotButton("help", "/help"));
 //                response.addButton(new DevBotButton("feedback", "/feedback"));
 //                response.setInlineButtons(true);
-                response.addButton(new DevBotButton("help", "/help"));
-                response.addButton(new DevBotButton("feedback", "/feedback"));
-                response.setNewButtonsLine();
-                response.addButton(new DevBotButton("create club", "/create-club"));
-                response.addButton(new DevBotButton("check location", "/check-location"));
-                response.setInlineButtons(true);
+                if (response.isHasActivityStatus()) {
+                    if (response.getUserActivityStatus() == UserActivityStatus.SPORTSMEN) {
+                        response.addButton(new DevBotButton("help", "/help"));
+                        response.addButton(new DevBotButton("feedback", "/feedback"));
+                        response.setNewButtonsLine();
+                        response.addButton(new DevBotButton("join-club", "/join-club"));
+                        response.addButton(new DevBotButton("profile", "/check-profile"));
+                        response.setInlineButtons(true);
+                    }
+                    else {
+                        response.addButton(new DevBotButton("help", "/help"));
+                        response.addButton(new DevBotButton("feedback", "/feedback"));
+                        response.setNewButtonsLine();
+                        response.addButton(new DevBotButton("create club", "/create-club"));
+                        response.addButton(new DevBotButton("clubs", "/clubs"));
+                        response.setInlineButtons(true);
+                    }
+                }
+                else {
+                    response.addButton(new DevBotButton("help", "/help"));
+                    response.addButton(new DevBotButton("feedback", "/feedback"));
+                    response.setNewButtonsLine();
+                    response.addButton(new DevBotButton("create club", "/create-club"));
+                    response.addButton(new DevBotButton("check location", "/check-location"));
+                    response.setInlineButtons(true);
+                }
             }
 
             telegramBot.getResponseSender()

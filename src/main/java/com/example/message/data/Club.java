@@ -8,8 +8,10 @@ import java.util.List;
 public class Club {
     private String clubName;
     private Location location;
+    private String clubCode = "";
     private List<DevBotUser> participants;
     private List<Event> eventsList;
+    private DevBotUser admin;
 
     public Club() {
         clubName = "none";
@@ -42,5 +44,37 @@ public class Club {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public String getClubCode() {
+        return clubCode;
+    }
+
+    public void setClubCode(String clubCode) {
+        this.clubCode = clubCode;
+    }
+
+    public List<DevBotUser> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<DevBotUser> participants) {
+        this.participants = participants;
+    }
+
+    public List<Event> getEventsList() {
+        return eventsList;
+    }
+
+    public void setEventsList(List<Event> eventsList) {
+        this.eventsList = eventsList;
+    }
+
+    public DevBotUser getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(DevBotUser admin) {
+        this.admin = admin;
     }
 }

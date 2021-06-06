@@ -18,6 +18,12 @@ public class DevBotButton {
         this.requiredLocation = false;
     }
 
+    public DevBotButton(@NotNull final String buttonText, @NotNull final String buttonHiddenText, boolean requiredLocation) {
+        this.buttonText = buttonText;
+        this.buttonHiddenText = buttonHiddenText;
+        this.requiredLocation = requiredLocation;
+    }
+
     public DevBotButton() {
         buttonHiddenText = "";
         buttonHiddenText = "";

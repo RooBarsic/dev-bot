@@ -1,24 +1,34 @@
 package com.example.servingwebcontent.components;
 
 
+import com.example.message.data.City;
 import com.example.message.data.Club;
 import com.example.message.data.DevBotUser;
+import com.example.message.data.Location;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class Hierarchy {
     public Club club = new Club();
     private List<DevBotUser> usersList;
-    private AtomicInteger requestsNumber = new AtomicInteger(0);
+    private List<City> registeredCities;
+    private List<Club> registeredClubs;
 
     Hierarchy() {
         usersList = new LinkedList<>();
+        registeredCities = new ArrayList<>();
+        registeredClubs = new ArrayList<>();
+
+        setDefaultData();
+    }
+
+    private void setDefaultData() {
+        registeredCities.add(new City("Saint-Petersburg", new Location()));
     }
 
     public void updateHierarchy(final Hierarchy hierarchy) {
@@ -81,15 +91,33 @@ public class Hierarchy {
         return new ArrayList<>(usersList);
     }
 
-    public int getRequestsNumber() {
-        return requestsNumber.get();
-    }
-
-    public void resetRequestNum() {
-        requestsNumber.set(0);
+    public City getCityByLocation(Location location) {
+        double closestDistance = -1.;
+        City nearestCity = null;
+        for (City city : registeredCities) {
+            double dist = city.getLocation().calcDistMavenCosines(location);
+            if (nearestCity == null || dist < closestDistance) {
+                closestDistance = dist;
+                nearestCity = city;
+            }
+        }
+        return  nearestCity;
     }
 
     public void gotNewRequest() {
-        requestsNumber.incrementAndGet();
+    }
+
+    public void addClub(Club club) {
+        registeredClubs.add(club);
+    }
+
+    public List<Club> getAllUSerClubs(@NotNull final DevBotUser user) {
+        List<Club> clubs = new ArrayList<>();
+        for (Club club : registeredClubs) {
+            if (club.getAdmin().getTelegramId().equals(user.getTelegramId())) {
+                clubs.add(club);
+            }
+        }
+        return clubs;
     }
 }

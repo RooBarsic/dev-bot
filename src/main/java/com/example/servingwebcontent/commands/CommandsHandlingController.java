@@ -37,15 +37,13 @@ public class CommandsHandlingController {
         final DevBotResponse response = new DevBotResponse();
         response.setReceiverChatId(request.getUserChatId());
 
-        response.setMessage("Salam. My name is DevSport_bot, I will help you to manage your sport activities");
+        response.setMessage("Salam. I'm DevSport_bot. I will help you with your sport activities.\n" +
+                "Please send me your FIO");
 
-        response.addButton(new DevBotButton("help", "/help"));
-        response.addButton(new DevBotButton("feedback", "/feedback"));
-        response.setNewButtonsLine();
-        response.addButton(new DevBotButton("create club", "/create-club"));
-        response.addButton(new DevBotButton("check location", "/check-location"));
-        response.setInlineButtons(true);
+        hierarchy.getUserToUpdateByTelegramId(request.getUserChatId())
+                .setExpectedData(ExpectedData.USER_FIO);
 
+        response.setNoButtons(true);
 
         final Gson jsonConverter = new Gson();
         System.out.println("TELEGRAM_RESPONSE_CONTROLLER = " + TELEGRAM_RESPONSE_CONTROLLER);
