@@ -89,8 +89,20 @@ public class ClubCommandsHandler {
         response.setReceiverChatId(request.getUserChatId());
 
         if (request.isHasLocation()) {
-            double dist = hierarchy.club.getLocation().distance(request.getLocation());
+            double dist = hierarchy.club.getLocation().calcDistAzim(request.getLocation());
+            double dist_cosin = hierarchy.club.getLocation().calcDistMavenCosines(request.getLocation());
+            double dist_haversine = hierarchy.club.getLocation().calcDistMavenHaversine(request.getLocation());
+            double dist_Vincenty = hierarchy.club.getLocation().calcDistMavenVincenty(request.getLocation());
+            double distance = hierarchy.club.getLocation().distance(request.getLocation());
+
+
             String message = "";
+            message += "calcDistMavenCosines = " + dist_cosin + "\n" +
+                    "calcDistMavenHaversine = " + dist_haversine  + "\n" +
+                    "calcDistMavenVincenty = " + dist_Vincenty + "\n" +
+                    "calcDistAzim = " + dist + "\n" +
+                    "distance = " + distance  + "\n";
+
             if (dist > 10.0) {
                 message += "You are too fare from club. Please come to club and try again today!\n";
             }

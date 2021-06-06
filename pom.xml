@@ -23,9 +23,23 @@
 
     <name>serving-web-content</name>
     <description>Demo project for Spring Boot</description>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+
 
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.grumlimited</groupId>
+            <artifactId>geocalc</artifactId>
+            <version>0.6</version>
+        </dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>

@@ -1,5 +1,8 @@
 package com.example.message.data;
 
+import com.grum.geocalc.Coordinate;
+import com.grum.geocalc.EarthCalc;
+import com.grum.geocalc.Point;
 import org.jetbrains.annotations.NotNull;
 
 public class Location {
@@ -49,7 +52,6 @@ public class Location {
     }
 
     public double distance(@NotNull final Location location) {
-
         double lat1 = location.latitude;
         double lon1 = location.longitude;
         double lat2 = this.latitude;
@@ -69,4 +71,71 @@ public class Location {
     private double rad2deg(double rad) {
         return (rad * 180.0 / Math.PI);
     }
+
+    public double calcDistAzim(@NotNull final Location location) {
+        double R = 63710320.0;
+        double z1 = R * Math.cos(this.latitude);
+        double x1 = R * Math.sin(this.latitude) * Math.cos(this.longitude);
+        double y1 = R * Math.sin(this.latitude) * Math.sin(this.longitude);
+
+        double z2 = R * Math.cos(location.latitude);
+        double x2 = R * Math.sin(location.latitude) * Math.cos(location.longitude);
+        double y2 = R * Math.sin(location.latitude) * Math.sin(location.longitude);
+
+        double s = ((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)) + ((z1 - z2) * (z1 - z2));
+        s = Math.sqrt(s);
+
+        return s;
+    }
+
+    /** Spherical law of cosines */
+    public double calcDistMavenCosines(@NotNull final Location location) {
+        //Kew, London
+        Coordinate lat = Coordinate.fromDegrees(this.latitude); //51.4843774);
+        Coordinate lng = Coordinate.fromDegrees(this.longitude); //-0.2912044);
+        Point kew = Point.at(lat, lng);
+
+        //Richmond, London
+        lat = Coordinate.fromDegrees(location.latitude); //51.4613418);
+        lng = Coordinate.fromDegrees(location.longitude); //-0.3035466);
+        Point richmond = Point.at(lat, lng);
+
+        double distance = EarthCalc.gcd.distance(richmond, kew); //in meters
+
+        return distance;
+    }
+
+    /** Haversine formula */
+    public double calcDistMavenHaversine(@NotNull final Location location) {
+        //Kew, London
+        Coordinate lat = Coordinate.fromDegrees(this.latitude); //51.4843774);
+        Coordinate lng = Coordinate.fromDegrees(this.longitude); //-0.2912044);
+        Point kew = Point.at(lat, lng);
+
+        //Richmond, London
+        lat = Coordinate.fromDegrees(location.latitude); //51.4613418);
+        lng = Coordinate.fromDegrees(location.longitude); //-0.3035466);
+        Point richmond = Point.at(lat, lng);
+
+        double distance = EarthCalc.haversine.distance(richmond, kew); //in meters
+        return distance;
+    }
+
+    /** Vincenty formula */
+    public double calcDistMavenVincenty(@NotNull final Location location) {
+        //Kew, London
+        Coordinate lat = Coordinate.fromDegrees(this.latitude); //51.4843774);
+        Coordinate lng = Coordinate.fromDegrees(this.longitude); //-0.2912044);
+        Point kew = Point.at(lat, lng);
+
+        //Richmond, London
+        lat = Coordinate.fromDegrees(location.latitude); //51.4613418);
+        lng = Coordinate.fromDegrees(location.longitude); //-0.3035466);
+        Point richmond = Point.at(lat, lng);
+
+        double distance = EarthCalc.vincenty.distance(richmond, kew); //in meters
+        return distance;
+    }
+
+
 }
