@@ -124,17 +124,17 @@ public class ClubCommandsHandler {
 //                    "distance = " + distance  + "\n";
 
             dist = dist_cosin;
-//            if (dist > 10000.0) {
-//                message += "You are too fare from club. Please come to club and try again today!\n";
-//            }
-//            else {
+            if (dist > 300.0) {
+                message += "You are too fare from club. Please come to club and try again today!\n";
+            }
+            else {
                 message += "You are in the club. You got +1 point to your bonuses. Congratulations.\n";
-//            }
-//            message += "\nYour distance from club location = " + Double.toString(dist) + " meters\n" +
-//                    "Club latitude : " + hierarchy.club.getLocation().getLatitude() + "\n" +
-//                    "Club longitude : " + hierarchy.club.getLocation().getLongitude() + "\n\n" +
-//                    "Your latitude : " + request.getLocation().getLatitude() + "\n" +
-//                    "Your longitude : " + request.getLocation().getLongitude();
+            }
+            message += "\nYour distance from club location = " + Double.toString(dist) + " meters\n" +
+                    "Club latitude : " + hierarchy.club.getLocation().getLatitude() + "\n" +
+                    "Club longitude : " + hierarchy.club.getLocation().getLongitude() + "\n\n" +
+                    "Your latitude : " + request.getLocation().getLatitude() + "\n" +
+                    "Your longitude : " + request.getLocation().getLongitude();
             response.setMessage(message);
             hierarchy.getUserToUpdateByTelegramId(request.getUserChatId())
                     .setExpectedData(ExpectedData.NONE);
